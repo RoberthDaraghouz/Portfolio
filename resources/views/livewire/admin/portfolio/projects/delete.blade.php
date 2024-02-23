@@ -1,19 +1,19 @@
 <?php
 
-use App\Models\Category;
+use App\Models\Project;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Volt\Component;
 
 new class extends Component {
     use LivewireAlert;
 
-    public Category $category;
+    public Project $project;
 
     protected $listeners = ['destroy'];
 
     public function delete(): void {
         try {
-            $this->confirm('Are you sure to delete? <br><span class="text-indigo-700">' . $this->category->name . '</span>', [
+            $this->confirm('Are you sure to delete? <br><span class="text-indigo-700">' . $this->project->name . '</span>', [
                 'confirmButtonText' => 'Delete',
                 'onConfirmed' => 'destroy',
                 'cancelButtonText' => 'Cancel',
@@ -25,14 +25,20 @@ new class extends Component {
 
     public function destroy(): void {
         try {
-            $this->category->delete();
+            if ($this->project->image_url) {
+                if (Storage::exists($this->project->image_url)) {
+                    Storage::delete($this->project->image_url);
+                }
+            }
 
-            $this->alert('success', 'Category deleted');
-            $this->dispatch('category-deleted');
+            $this->project->delete();
+
+            $this->alert('success', 'Project deleted');
+            $this->dispatch('project-deleted');
         } catch (\Throwable $th) {
             $this->alert('error', 'Fail deleted');
         }
     }
 }; ?>
 
-<x-buttons.icon-delete wire:click="delete" />
+<x-buttons.icon-delete wire:click="delete">Delete</x-buttons.icon-delete>

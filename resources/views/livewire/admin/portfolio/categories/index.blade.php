@@ -12,6 +12,9 @@ new class extends Component {
         $this->getCategories();
     }
 
+    #[On('project-created')]
+    #[On('project-updated')]
+    #[On('project-deleted')]
     #[On('category-created')]
     #[On('category-updated')]
     #[On('category-deleted')]
@@ -30,7 +33,7 @@ new class extends Component {
                     </div>
                     <div class="flex items-center">
                         <livewire:admin.portfolio.categories.delete :$category wire:key="delete-{{ $category->id }}" />
-                        <livewire:admin.portfolio.categories.edit :category="$category" wire:key="edit-{{ $category->id }}" />
+                        <livewire:admin.portfolio.categories.edit :$category wire:key="edit-{{ $category->id }}" />
                     </div>
                 </li>
             @endforeach

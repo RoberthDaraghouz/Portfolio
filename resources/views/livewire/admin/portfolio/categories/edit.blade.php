@@ -43,20 +43,21 @@ new class extends Component {
     }
 
     public function update($value): void {
-        if (strlen($value)) {
+        if (strlen($value) > 0 && strlen($value) <= 30) {
             try {
                 $this->category->update([
                     'name' => $value
                 ]);
 
                 $this->alert('success', 'Category updated');
-                $this->dispatch('category-updated');
             } catch (\Throwable $th) {
                 $this->alert('error', 'Update failed');
             }
         } else {
             $this->alert('error', 'Update failed');
         }
+
+        $this->dispatch('category-updated');
     }
 }; ?>
 

@@ -11,15 +11,15 @@ use Tests\TestCase;
 class CategoryTest extends TestCase{
     use RefreshDatabase;
 
-    public function test_categories_pages_are_displayed(): void {
+    public function test_category_pages_are_displayed(): void {
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/portfolio');
 
         $response
             ->assertOk()
-            ->assertSeeVolt('admin.portfolio.categories.index')
-            ->assertSeeVolt('admin.portfolio.categories.create');
+            ->assertSee('admin.portfolio.categories.index')
+            ->assertSee('admin.portfolio.categories.create');
     }
 
     public function test_categories_can_be_showed(): void {

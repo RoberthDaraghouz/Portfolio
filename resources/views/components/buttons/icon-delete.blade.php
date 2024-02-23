@@ -1,6 +1,6 @@
 <button {{ $attributes->merge([
         'type' => 'button',
-        'class' => 'flex items-center gap-1 hover:bg-red-100 p-1 rounded text-md text-red-700 transtition'
+        'class' => 'flex items-center gap-1 hover:bg-red-100 p-1 rounded text-xs text-red-700 transtition'
     ]) }}>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-4 h-4">

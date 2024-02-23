@@ -1,19 +1,28 @@
 <?php
 
 use App\Models\Category;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Rule;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    #[Rule('required|string|max:30')]
+    use LivewireAlert;
+
+    #[Rule('required|string|max:30', as: 'category name')]
     public string $name;
 
     public function store(): void {
         $validated = $this->validate();
 
-        Category::create($validated);
+        try {
+            Category::create($validated);
 
-        $this->name = '';
+            $this->reset();
+            $this->alert('success', 'Category created');
+        } catch (\Throwable $th) {
+            $this->alert('error', 'Fail created');
+        }
+
         $this->dispatch('category-created');
     }
 }; ?>
@@ -22,12 +31,16 @@ new class extends Component {
     <div class="relative mt-2">
         <input wire:model="name"
             type="text"
+            id="name"
+            name="name"
             placeholder="New category"
             autocomplete="off"
             maxlength="30"
-            class="block w-full border-gray-300 focus:border-indigo-700 focus:ring-indigo-700 placeholder:text-gray-600 rounded-full shadow-sm sm:text-sm sm:leading-6 py-1.5 pr-16"
+            class="block w-full placeholder:text-gray-500 rounded-full shadow sm:text-sm py-1.5 pr-16
+            @error('name') border-red-300 focus:border-red-500 focus:ring-red-500
+                @else border-gray-300 focus:border-indigo-500 focus:ring-indigo-500
+            @enderror"
         >
-        <x-input-error class="mt-2" :messages="$errors->get('name')" />
         <div class="absolute inset-y-0 right-0 flex items-center">
             <button type="submit" class="flex items-center rounded pr-3 text-xs gap-1 font-semibold text-indigo-700 hover:text-indigo-500 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -38,4 +51,5 @@ new class extends Component {
             </button>
         </div>
     </div>
+    <x-input-error class="mt-1" :messages="$errors->get('name')" />
 </form>
