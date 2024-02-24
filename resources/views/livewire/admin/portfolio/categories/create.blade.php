@@ -38,7 +38,7 @@ new class extends Component {
             maxlength="30"
             class="block w-full placeholder:text-gray-500 rounded-full shadow sm:text-sm py-1.5 pr-16
             @error('name') border-red-300 focus:border-red-500 focus:ring-red-500
-                @else border-gray-300 focus:border-indigo-500 focus:ring-indigo-500
+            @else border-gray-300 focus:border-indigo-500 focus:ring-indigo-500
             @enderror"
         >
         <div class="absolute inset-y-0 right-0 flex items-center">

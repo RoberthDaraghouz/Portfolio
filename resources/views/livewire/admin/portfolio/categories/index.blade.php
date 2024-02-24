@@ -30,9 +30,19 @@ new class extends Component {
                 <li wire:key="{{ $category->id }}" class="flex items-center justify-between px-4 py-2 text-sm text-gray-900">
                     <div class="flex-1">
                         {{ $category->name }}
+                        @if ($category->projects->count())
+                            <x-badges.info class="ml-1">
+                                {{ $category->projects->count() }}
+                                <span class="ml-1 md:hidden lg:flex">
+                                    {{ ($category->projects->count() == 1 ? 'project' : 'projects') }}
+                                </span>
+                            </x-badges.info>
+                        @endif
                     </div>
                     <div class="flex items-center">
-                        <livewire:admin.portfolio.categories.delete :$category wire:key="delete-{{ $category->id }}" />
+                        @if (!$category->projects->count())
+                            <livewire:admin.portfolio.categories.delete :$category wire:key="delete-{{ $category->id }}" />
+                        @endif
                         <livewire:admin.portfolio.categories.edit :$category wire:key="edit-{{ $category->id }}" />
                     </div>
                 </li>

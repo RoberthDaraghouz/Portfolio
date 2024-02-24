@@ -6,12 +6,25 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <x-panels.section>
+                <x-slot:title>
+                    <div class="flex items-center justify-between">
+                        <div class="flex gap-1">
+                            Messages
+                            <livewire:admin.dashboard.messages.unread-messages />
+                        </div>
+                        <livewire:admin.dashboard.messages.select-pagination />
+                    </div>
+                </x-slot:title>
+
+                <x-slot:header>
+                    {{ __('Check your messages from visitors and possible customers.') }}
+                </x-slot:header>
+
+                <livewire:admin.dashboard.messages.index />
+
+            </x-panels.section>
         </div>
     </div>
 </x-app-layout>
